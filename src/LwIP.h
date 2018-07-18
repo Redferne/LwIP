@@ -41,6 +41,8 @@
 
 /* This file is the enter point of the library for Arduino */
 
+#include "lwipopts.h"
+
 #endif /* __LWIP_H__ */
 
 /****END OF FILE****/
