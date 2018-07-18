@@ -1,0 +1,22 @@
+{
+"name": "LwIP",
+"keywords": "LwIP",
+"description": "LwIP for the STM32",
+"downloadUrl": "https://local_download_only.com/v1.0.0.tar.gz",
+"authors":
+[
+    {
+    "name": "Adam Dunkels",
+    "email": "adam@sics.se"
+    }
+],
+"build": 
+{ 
+    "flags" : "-Isrc/ -I../../src/",
+    "libArchive" : "False"
+},
+"dependencies": {   },
+"version": "2.0.3",
+"frameworks": "arduino",
+"platforms": "*"
+}
