@@ -1,8 +1,8 @@
 {
 "name": "LwIP",
 "keywords": "LwIP",
-"description": "LwIP for the STM32",
-"downloadUrl": "https://local_download_only.com/v1.0.0.tar.gz",
+"description": "LwIP",
+"downloadUrl": "http://download.savannah.nongnu.org/releases/lwip/lwip-2.1.0.zip",
 "authors":
 [
     {
@@ -12,11 +12,32 @@
 ],
 "build": 
 { 
-    "flags" : "-Isrc/ -I../../src/",
-    "libArchive" : "False"
+    "flags" : [
+    	"-I src",
+    	"-I src/include",
+    	"-I src/include/compat",
+    	"-I src/include/lwip",
+    	"-I src/include/lwip",
+    	"-I src/include/lwip/apps",
+    	"-I src/include/lwip/priv",
+    	"-I src/include/lwip/prot",
+    	"-I src/include/netif",
+    	"-I src/include/netif/ppp",
+    	"-I src/include/netif/ppp/polarssl",
+    	"-I src/netif",
+    	"-I src/netif/ppp",
+    	"-I src/netif/ppp/polarssl",
+    	"-I src/include/netif/priv",
+    	"-I src/api",
+    	"-I src/apps/sntp",
+    	"-I src/core",
+    	"-I src/core/ipv4",
+    	"-I src/core/ipv6",
+    	"-I src/api",
+     	"-I ../../src/"
+     ]
 },
-"dependencies": {   },
-"version": "2.0.3",
+"version": "2.1.0",
 "frameworks": "arduino",
 "platforms": "*"
 }
