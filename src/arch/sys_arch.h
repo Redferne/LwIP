@@ -32,13 +32,13 @@
 #ifndef __SYS_RTXC_H__
 #define __SYS_RTXC_H__
 
-#include <cmsis_os.h>
-
 #include <FreeRTOS.h>
-
 #include "task.h"
 #include "queue.h"
 #include "semphr.h"
+
+#if __has_include("cmsis_os.h")
+#include <cmsis_os.h>
 
 #define SYS_MBOX_NULL (xQueueHandle)0
 #define SYS_SEM_NULL  (xSemaphoreHandle)0
@@ -48,6 +48,7 @@ typedef xSemaphoreHandle sys_sem_t;
 typedef xQueueHandle sys_mbox_t;
 typedef xTaskHandle sys_thread_t;
 typedef osSemaphoreId sys_mutex_t;
+typedef int sys_prot_t;
 
 typedef struct _sys_arch_state_t
 {
@@ -57,12 +58,34 @@ typedef struct _sys_arch_state_t
 	unsigned short nTaskCount;
 } sys_arch_state_t;
 
+#else
 
+#if 0
+#define SYS_MBOX_NULL   NULL
+#define SYS_SEM_NULL    NULL
+typedef void * sys_prot_t;
+typedef void * sys_sem_t;
+typedef void * sys_mbox_t;
+typedef void * sys_thread_t;
+#endif
 
-//extern sys_arch_state_t s_sys_arch_state;
+#if 1
+#define SYS_MBOX_NULL (xQueueHandle)0
+#define SYS_SEM_NULL  ERR_MEM
+#define SYS_DEFAULT_THREAD_STACK_DEPTH	configMINIMAL_STACK_SIZE
 
-//void sys_set_default_state();
-//void sys_set_state(signed char *pTaskName, unsigned short nStackSize);
+#define archMESG_QUEUE_LENGTH	( 6 )
+#define archPOST_BLOCK_TIME_MS	( ( unsigned long ) 10000 )
+
+typedef SemaphoreHandle_t sys_mutex_t;
+typedef SemaphoreHandle_t sys_sem_t;
+typedef QueueHandle_t sys_mbox_t;
+typedef TaskHandle_t sys_thread_t;
+typedef int sys_prot_t;
+
+#endif
+
+#endif
 
 #endif /* __SYS_RTXC_H__ */
 
