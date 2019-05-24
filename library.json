@@ -34,7 +34,7 @@
     	"-I src/core/ipv4",
     	"-I src/core/ipv6",
     	"-I src/api",
-     	"-I ../../src/"
+     	"-I ../../../../src/"
      ]
 },
 "version": "2.1.0",
