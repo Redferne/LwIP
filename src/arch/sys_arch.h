@@ -37,12 +37,18 @@
 #include "queue.h"
 #include "semphr.h"
 
+#include <cmsis_os.h>
+
+#ifdef __has_include
 #if __has_include("cmsis_os.h")
+#warning "has cmsis_os.h"
 #include <cmsis_os.h>
 
 #define SYS_MBOX_NULL (xQueueHandle)0
 #define SYS_SEM_NULL  (xSemaphoreHandle)0
 #define SYS_DEFAULT_THREAD_STACK_DEPTH	configMINIMAL_STACK_SIZE
+
+#define archMESG_QUEUE_LENGTH	( 6 )
 
 typedef xSemaphoreHandle sys_sem_t;
 typedef xQueueHandle sys_mbox_t;
@@ -60,16 +66,6 @@ typedef struct _sys_arch_state_t
 
 #else
 
-#if 0
-#define SYS_MBOX_NULL   NULL
-#define SYS_SEM_NULL    NULL
-typedef void * sys_prot_t;
-typedef void * sys_sem_t;
-typedef void * sys_mbox_t;
-typedef void * sys_thread_t;
-#endif
-
-#if 1
 #define SYS_MBOX_NULL (xQueueHandle)0
 #define SYS_SEM_NULL  ERR_MEM
 #define SYS_DEFAULT_THREAD_STACK_DEPTH	configMINIMAL_STACK_SIZE
@@ -85,7 +81,30 @@ typedef int sys_prot_t;
 
 #endif
 
+#else // Old GCC 4.8.....
+
+#include <cmsis_os.h>
+
+#define SYS_MBOX_NULL (xQueueHandle)0
+#define SYS_SEM_NULL  (xSemaphoreHandle)0
+#define SYS_DEFAULT_THREAD_STACK_DEPTH	configMINIMAL_STACK_SIZE
+
+#define archMESG_QUEUE_LENGTH	( 6 )
+
+typedef xSemaphoreHandle sys_sem_t;
+typedef xQueueHandle sys_mbox_t;
+typedef xTaskHandle sys_thread_t;
+typedef osSemaphoreId sys_mutex_t;
+typedef int sys_prot_t;
+
+typedef struct _sys_arch_state_t
+{
+	// Task creation data.
+	char cTaskName[configMAX_TASK_NAME_LEN];
+	unsigned short nStackDepth;
+	unsigned short nTaskCount;
+} sys_arch_state_t;
+
 #endif
 
-#endif /* __SYS_RTXC_H__ */
-
+#endif // __SYS_RTXC_H__
